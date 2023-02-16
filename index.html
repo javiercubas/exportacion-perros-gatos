@@ -147,11 +147,11 @@
       function predecir() {
           if (modelo != null) {
               //Pasar canvas a version 150x150
-              resample_single(canvas, 150, 150, othercanvas);
+              resample_single(canvas, 64, 64, othercanvas);
 
               var ctx2 = othercanvas.getContext("2d");
 
-              var imgData = ctx2.getImageData(0,0,150,150);
+              var imgData = ctx2.getImageData(0,0,64,64);
               var arr = []; //El arreglo completo
               var arr150 = []; //Al llegar a arr150 posiciones se pone en 'arr' como un nuevo indice
               for (var p=0, i=0; p < imgData.data.length; p+=4) {
@@ -159,7 +159,7 @@
                   var green = imgData.data[p+1]/255;
                   var blue = imgData.data[p+2]/255;
                   arr150.push([red, green, blue]); //Agregar al arr150 y normalizar a 0-1. Aparte queda dentro de un arreglo en el indice 0... again
-                  if (arr150.length == 150) {
+                  if (arr150.length == 64) {
                       arr.push(arr150);
                       arr150 = [];
                   }
