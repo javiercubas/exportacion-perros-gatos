@@ -22,7 +22,7 @@
     async function predict() {
       const file = document.getElementById('image-selector').files[0];
       const img = await tf.browser.fromPixels(file);
-      const resizedImg = tf.image.resizeBilinear(img, [224, 224]);
+      const resizedImg = tf.image.resizeBilinear(img, [64, 64]);
       const expandedImg = resizedImg.expandDims(0);
       const normalizedImg = expandedImg.div(255.0);
       const prediction = await model.predict(normalizedImg).data();
