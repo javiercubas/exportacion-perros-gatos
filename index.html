@@ -21,19 +21,31 @@
 
     async function predict() {
       const file = document.getElementById('image-selector').files[0];
-      const img = await tf.browser.fromPixels(file);
-      const resizedImg = tf.image.resizeBilinear(img, [64, 64]);
-      const expandedImg = resizedImg.expandDims(0);
-      const normalizedImg = expandedImg.div(255.0);
-      const prediction = await model.predict(normalizedImg).data();
-      const output = document.getElementById('prediction');
-
-      if (prediction[0] > prediction[1]) {
-        output.innerText = 'Perro';
-      } else {
-        output.innerText = 'Gato';
+      const img = new Image();
+      const reader = new FileReader();
+    
+      reader.onload = function (e) {
+        img.src = e.target.result;
+        img.width = 64;
+        img.height = 64;
       }
-    }
+    
+      reader.readAsDataURL(file);
+    
+      img.onload = async function() {
+        const tensorImg = tf.browser.fromPixels(img);
+        const expandedImg = tensorImg.expandDims(0);
+        const normalizedImg = expandedImg.div(255.0);
+        const prediction = await model.predict(normalizedImg).data();
+        const output = document.getElementById('prediction');
+        
+        if (prediction[0] > prediction[1]) {
+          output.innerText = 'Perro';
+        } else {
+          output.innerText = 'Gato';
+        }
+      }
+    }    
 
     loadModel();
 
