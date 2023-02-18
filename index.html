@@ -40,7 +40,7 @@
         const output = document.getElementById('prediction');
         console.log(prediction);
         
-        if (prediction[0] > prediction[1]) {
+        if (prediction[0] > 0.9) {
           output.innerText = 'Perro';
         } else {
           output.innerText = 'Gato';
