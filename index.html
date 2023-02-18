@@ -38,6 +38,7 @@
         const normalizedImg = expandedImg.div(255.0);
         const prediction = await model.predict(normalizedImg).data();
         const output = document.getElementById('prediction');
+        console.log(prediction);
         
         if (prediction[0] > prediction[1]) {
           output.innerText = 'Perro';
